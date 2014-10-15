@@ -9,7 +9,7 @@ export default Ember.View.extend({
   dragEnter: cancelFunc,
   dragOver: cancelFunc,
 
-  drop: function(event) {
+  dropThing: function(event) {
     console.debug("drop event");
     event.preventDefault();
 
@@ -19,5 +19,5 @@ export default Ember.View.extend({
     this.get("controller").addPostById(data);
     
     return false;
-  }
+  }.on("drop")
 });
