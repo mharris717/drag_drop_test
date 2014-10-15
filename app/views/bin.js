@@ -24,11 +24,15 @@ import Droppable from '../mixins/droppable';
 // });
 
 export default Ember.View.extend(Droppable, {
+  // addDroppedObject: function(event) {
+
+  // },
+  
   acceptDrop: function(event) {
-    console.debug("acceptDrop");
     var dataTransfer = event.originalEvent.dataTransfer;
-    var data = dataTransfer.getData("Text");
-    console.debug(data);
+    var payload = dataTransfer.getData("Text");
+    var data = JSON.parse(payload);
+    
     this.get("controller").addPostById(data);
   }
 });

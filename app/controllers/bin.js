@@ -9,9 +9,10 @@ export default Ember.ArrayController.extend({
   //   this.pushObject(seed);
   // }
 
-  addPostById: function(id) {
+  addPostById: function(data) {
     var me = this;
-    this.get('store').find('post',parseInt(id)).then(function(post) {
+
+    this.get('store').find(data.modelName,parseInt(data.id)).then(function(post) {
       me.pushObject(post);
     }, function(error) {
       console.debug("addPostById error");

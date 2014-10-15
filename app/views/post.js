@@ -1,12 +1,6 @@
 import Ember from 'ember';
+import Draggable from '../mixins/draggable';
 
-export default Ember.View.extend({
-  dragStartCount: 0,
-
-  dragStart: function(event) {
-    console.debug("drag start");
-    var dataTransfer = event.originalEvent.dataTransfer;
-    var data = this.get("controller.id");
-    dataTransfer.setData('Text', data);
-  }
+export default Ember.View.extend(Draggable, {
+  dragModelName: 'post'
 });
