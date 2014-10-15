@@ -7,5 +7,10 @@
 </div>
 
 <div id="bin">
-  {{draggable-object-target}}
+  {{draggable-object-target content=binPosts}}
+
+  {{#each binPosts}}
+    {{this}}
+    <br>
+  {{/each}}
 </div>
