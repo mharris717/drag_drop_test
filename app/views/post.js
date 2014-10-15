@@ -6,7 +6,7 @@ export default Ember.View.extend({
   dragStart: function(event) {
     console.debug("drag start");
     var dataTransfer = event.originalEvent.dataTransfer;
-    var data = this.get("controller.title");
+    var data = this.get("controller.id");
     dataTransfer.setData('Text', data);
   }
 });

@@ -16,6 +16,7 @@ export default Ember.View.extend({
     var dataTransfer = event.originalEvent.dataTransfer;
     var data = dataTransfer.getData("Text");
     console.debug(data);
+    this.get("controller").addPostById(data);
     
     return false;
   }

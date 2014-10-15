@@ -3,9 +3,20 @@ html, body {
 }
 
 #main {
-  max-width: 700px;
+  max-width: 1000px;
 }
 
 .author {
   font-size: 70%;
+}
+
+#posts {
+  width: 600px;
+  float: left;
+}
+
+#bin {
+  width: 200px;
+  float: left;
+  margin-left: 30px;
 }

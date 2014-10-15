@@ -1,5 +1,9 @@
-{{render "bin"}}
+<div id="posts">
+  {{#each this}}
+    {{render "post" this}}
+  {{/each}}
+</div>
 
-{{#each this}}
-  {{render "post" this}}
-{{/each}}
+<div id="bin">
+  {{render "bin"}}
+</div>
