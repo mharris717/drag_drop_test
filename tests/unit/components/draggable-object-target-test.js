@@ -4,6 +4,35 @@ import { test, moduleForComponent } from 'ember-qunit';
 var Thing = Ember.Object.extend({});
 moduleForComponent("draggable-object-target");
 
+var FakeStore = Ember.Object.extend({
+  find: function(name,id) {
+    var all = this.get('all');
+    var res  = null;
+    all.forEach(function(obj) {
+      if (obj.get('id') === id) {
+        res = obj;
+      }
+    });
+
+    // return new Ember.RSVP.Promise(function(success,failure) {
+    //   success(res);
+    // });
+    return res;
+  }
+});
+
+var makeStore = function() {
+  var all = [];
+  for (var i=1;i<=5;i++) {
+    all.push(Ember.Object.create({id: i}));
+  }
+  return FakeStore.create({all: all});
+};
+
+var randId = function() {
+  return 1;
+};
+
 test("smoke", function() {
   var s = this.subject();
   Ember.run(function() {
@@ -13,10 +42,10 @@ test("smoke", function() {
 });
 
 test("handlePayload", function() {
-  var s = this.subject();
-  var id = Math.random();
+  var s = this.subject({store: makeStore()});
+  var id = randId();
 
-  var payload = JSON.stringify({id: id, modelName: 'thing'});
+  var payload = JSON.stringify({id: id, modelName: 'post'});
   s.handlePayload(payload);
   equal(s.get('content.length'),1);
   equal(s.get('content.firstObject.id'),id);
@@ -29,14 +58,14 @@ var MockDataTransfer = Ember.Object.extend({
 });
 
 test("handlePayload twice", function() {
-  var s = this.subject();
+  var s = this.subject({store: makeStore()});
 
-  var id = Math.random();
-  var payload = JSON.stringify({id: id, modelName: 'thing'});
+  var id = randId();
+  var payload = JSON.stringify({id: id, modelName: 'post'});
   s.handlePayload(payload);
 
-  var id2 = Math.random();
-  payload = JSON.stringify({id: id2, modelName: 'thing'});
+  var id2 = randId();
+  payload = JSON.stringify({id: id2, modelName: 'post'});
   s.handlePayload(payload);
 
 
@@ -59,9 +88,9 @@ var makeMockEvent = function(payload) {
 };
 
 test("handleDrop", function() {
-  var id = Math.random();
-  var s = this.subject();
-  var payload = JSON.stringify({id: id, modelName: 'thing'});
+  var id = randId();
+  var s = this.subject({store: makeStore()});
+  var payload = JSON.stringify({id: id, modelName: 'post'});
   var event = makeMockEvent(payload);
 
   s.handleDrop(event);
@@ -72,10 +101,10 @@ test("handleDrop", function() {
 
 test("pass in content", function() {
   var content = [];
-  var s = this.subject({content: content});
-  var id = Math.random();
+  var s = this.subject({content: content, store: makeStore()});
+  var id = randId();
 
-  var payload = JSON.stringify({id: id, modelName: 'thing'});
+  var payload = JSON.stringify({id: id, modelName: 'post'});
   s.handlePayload(payload);
   equal(s.get('content.length'),1);
   equal(s.get('content.firstObject.id'),id);

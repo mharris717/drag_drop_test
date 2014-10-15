@@ -1,16 +1,20 @@
 <div id="posts">
   {{#each this}}
     {{draggable-object content=this}}
-    {{title}}
-    <br>
+    
+    <div>
+      <h3 class="title">{{title}}</h3>
+      <span class="author">By {{author}}</span>
+    </div>
+
   {{/each}}
 </div>
 
 <div id="bin">
-  {{draggable-object-target content=binPosts}}
+  {{draggable-object-target content=binPosts store=store}}
 
   {{#each binPosts}}
-    {{this}}
+    {{title}}
     <br>
   {{/each}}
 </div>

@@ -22,7 +22,7 @@ test("payload", function() {
   var s = this.subject();
   s.set("content",thing);
 
-  var exp = JSON.stringify({id: 1, modelName: 'thing'});
+  var exp = JSON.stringify({id: 1, modelName: 'post'});
   equal(s.get('payload'),exp);
 });
 
@@ -40,7 +40,7 @@ var makeMockEvent = function() {
 
 test("handleDragStart", function() {
   var thing = Thing.create({id: 1});
-  var expPayload = JSON.stringify({id: 1, modelName: 'thing'});
+  var expPayload = JSON.stringify({id: 1, modelName: 'post'});
 
   var s = this.subject();
   s.set("content",thing);
