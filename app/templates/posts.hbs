@@ -1,9 +1,11 @@
 <div id="posts">
   {{#each this}}
-    {{render "post" this}}
+    {{draggable-object content=this}}
+    {{title}}
+    <br>
   {{/each}}
 </div>
 
 <div id="bin">
-  {{render "bin"}}
+  {{draggable-object-target}}
 </div>

@@ -11,5 +11,5 @@ export default Ember.Component.extend({
   handleDragStart: function(event) {
     var dataTransfer = event.originalEvent.dataTransfer;
     dataTransfer.setData('Text', this.get('payload'));
-  }
+  }.on("dragStart")
 });

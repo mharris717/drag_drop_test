@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import Droppable from '../mixins/droppable';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(Droppable, {
   content: function() {
     return [];
   }.property(),
@@ -15,5 +16,9 @@ export default Ember.Component.extend({
     var dataTransfer = event.originalEvent.dataTransfer;
     var payload = dataTransfer.getData("Text");
     this.handlePayload(payload);
+  },
+
+  acceptDrop: function(event) {
+    this.handleDrop(event);
   }
 });
