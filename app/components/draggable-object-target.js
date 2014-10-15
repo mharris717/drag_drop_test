@@ -8,7 +8,6 @@ export default Ember.Component.extend(Droppable, {
 
   handlePayload: function(payload) {
     var data = JSON.parse(payload);
-    //var obj = Ember.Object.create({id: data.id});
     var obj = this.get('store').find(data.modelName,data.id);
     this.get('content').pushObject(obj);
   },

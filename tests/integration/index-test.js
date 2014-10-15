@@ -27,7 +27,7 @@ postsTest("smoke", function() {
 });
 
 postsTest("has draggable attr", function() {
-  equal(find("div[draggable=true]").length,10);
+  equal(find("span[draggable=true]").length,10);
 });
 
 test("droppable mixin", function() {
