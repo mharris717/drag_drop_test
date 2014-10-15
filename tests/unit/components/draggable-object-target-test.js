@@ -81,3 +81,10 @@ test("pass in content", function() {
   equal(s.get('content.firstObject.id'),id);
   equal(content.length,1);
 });
+
+test("template smoke", function() {
+  var all = [1,2,3,4,5];
+  var s = this.subject({content: all});
+  equal(this.$().find(".count").length,1);
+  equal(this.$().find(".count").text(),"5");
+});

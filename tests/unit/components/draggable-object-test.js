@@ -52,3 +52,8 @@ test("handleDragStart", function() {
   equal(data.dataType,"Text");
   equal(data.payload,expPayload);
 });
+
+test("template smoke", function() {
+  var s = this.subject();
+  equal(this.$().find(".thing").length,1);
+});
