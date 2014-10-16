@@ -1,34 +1,11 @@
 <div id="posts">
-  {{#each post in this}}
-    <div>
-      {{#draggable-object content=post parent=this}}
-        <span class="title">{{post.title}}</span>
-      {{/draggable-object}}
-      <br>
-      <span class="author">By {{post.author}}</span>
-    </div>
-    <br>
-  {{/each}}
+  {{object-bin name="All" model=this}}
 </div>
 
 <div id="bin">
-  {{#draggable-object-target content=binPosts}}
-    Bin #1<br>
-    
-  {{/draggable-object-target}}
-
-  {{#each post in binPosts}}
-    {{#draggable-object content=post parent=binPosts}}
-      {{post.title}}
-    {{/draggable-object}}
-    <br>
-  {{/each}}
-
+  {{object-bin name="Bin #1" model=binPosts}}
   <br><br>
-
   {{object-bin name="Bin #2"}}
   <br><br>
   {{object-bin name="Bin #3" model=binPosts}}
-
-  
 </div>
