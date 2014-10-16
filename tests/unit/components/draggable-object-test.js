@@ -49,13 +49,34 @@ test("notified of drop", function() {
     notifyDropCount = notifyDropCount + 1;
   };
 
-  var hashId = null;
-  Ember.run(function() {
-    hashId = coordinator.setObject(thing, {source: s});
+  var hashId = Ember.run(function() {
+    return coordinator.setObject(thing, {source: s});
   });
 
   coordinator.getObject(hashId);
   equal(notifyDropCount,1);
+});
+
+test("drop callbacks", function() {
+  var thing = Thing.create({id: 1});
+  var coordinator = Coordinator.create();
+
+  var callbackArgs = [];
+  coordinator.registerCallback(function(ops) {
+    callbackArgs.push(ops);
+  });
+
+  var s = this.subject({coordinator: coordinator, parent: []});
+  s.set("content",thing);
+
+  var hashId = Ember.run(function() {
+    return coordinator.setObject(thing, {source: s});
+  });
+
+  coordinator.getObject(hashId);
+
+  equal(callbackArgs.length,1);
+  equal(callbackArgs[0].obj.get('id'),1);
 });
 
 // test("template smoke", function() {

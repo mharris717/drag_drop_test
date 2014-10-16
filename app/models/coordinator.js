@@ -8,14 +8,25 @@ export default Ember.Object.extend({
 
   getObject: function(id) {
     var payload = this.get('objectMap').getObj(id);
+
     if (payload.ops.source) {
       payload.ops.source.notifyDrop(payload.obj);
     }
+
+    this.get('moveCallbacks').forEach(function(f) {
+      f({obj: payload.obj});
+    });
+
     return payload.obj;
   },
 
   setObject: function(obj,ops) {
     ops = ops || {};
     return this.get('objectMap').add({obj: obj, ops: ops});
+  },
+
+  moveCallbacks: [],
+  registerCallback: function(f) {
+    this.get("moveCallbacks").pushObject(f);
   }
 });
