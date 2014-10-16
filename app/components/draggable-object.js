@@ -3,6 +3,13 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: "span", 
 
+  initd: function() {
+    var me = this;
+    this.get('coordinator').on("objectDropsped", function() {
+      me.sendAction();
+    });
+  },
+
   handleDragStart: function(event) {
     console.debug("handleDragStart");
     
@@ -13,6 +20,10 @@ export default Ember.Component.extend({
 
     dataTransfer.setData('Text', id);
   }.on("dragStart"),
+
+  sdfsdf: function() {
+    this.sendAction();
+  }.on("coordinator.objectDropdped"),
 
   actions: {
     selectForDrag: function() {

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ObjHash from './obj-hash';
 
-export default Ember.Object.extend({
+export default Ember.Object.extend(Ember.Evented, {
   objectMap: function() {
     return ObjHash.create();
   }.property(),
@@ -13,9 +13,7 @@ export default Ember.Object.extend({
       payload.ops.source.sendAction();
     }
 
-    this.get('moveCallbacks').forEach(function(f) {
-      f({obj: payload.obj});
-    });
+    this.trigger("objectDropped", {obj: payload.obj});
 
     return payload.obj;
   },
@@ -26,7 +24,7 @@ export default Ember.Object.extend({
   },
 
   moveCallbacks: [],
-  registerCallback: function(f) {
+  registerCallsback: function(f) {
     this.get("moveCallbacks").pushObject(f);
   }
 });

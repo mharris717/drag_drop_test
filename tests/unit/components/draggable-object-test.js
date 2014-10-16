@@ -64,12 +64,11 @@ test("drop callbacks", function() {
   var coordinator = Coordinator.create();
 
   var callbackArgs = [];
-  coordinator.registerCallback(function(ops) {
+  coordinator.on("objectDropped", function(ops) {
     callbackArgs.push(ops);
   });
 
-  var s = this.subject({coordinator: coordinator, parent: []});
-  s.set("content",thing);
+  var s = this.subject({coordinator: coordinator, contesnt: thing});
 
   var hashId = Ember.run(function() {
     return coordinator.setObject(thing, {source: s});
