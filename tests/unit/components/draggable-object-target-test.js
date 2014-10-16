@@ -159,7 +159,7 @@ if (2 === 2) {
   });
 
   testWithObjects("pass in content", function(o) {
-    var s = this.subject({coordinator: o.coordinator, action:"objectDropped"});
+    var s = this.subject({coordinator: o.coordinator, action: "objectDropped"});
 
     var content = Ember.A();
     var targetObject = {

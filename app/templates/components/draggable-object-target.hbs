@@ -1,9 +1,7 @@
-{{yield}}
-
 {{#if enableClicking}}
   <a href="#" {{action "acceptForDrop"}}>
-    <div class="count">{{content.lengthz}}</div>  
+    {{yield}}
   </a>
 {{else}}
-  <div class="count">{{content.lengthz}}</div>  
+  {{yield}}
 {{/if}}

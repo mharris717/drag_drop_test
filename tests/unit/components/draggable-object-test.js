@@ -41,20 +41,22 @@ test("notified of drop", function() {
   var thing = Thing.create({id: 1});
   var coordinator = Coordinator.create();
 
-  var s = this.subject({coordinator: coordinator});
-  s.set("content",thing);
+  var s = this.subject({coordinator: coordinator, content: thing, action: "objectDropped"});
 
-  var notifyDropCount = 0;
-  s.on("objectDropped", s, function() {
-    notifyDropCount++;
-  });
+  var content = Ember.A();
+  var targetObject = {
+    objectDropped: function(obj) {
+      content.push(obj);
+    }
+  };
+  s.set("targetObject",targetObject);
 
   var hashId = Ember.run(function() {
     return coordinator.setObject(thing, {source: s});
   });
 
   coordinator.getObject(hashId);
-  equal(notifyDropCount,1);
+  equal(content.length,1);
 });
 
 test("drop callbacks", function() {
