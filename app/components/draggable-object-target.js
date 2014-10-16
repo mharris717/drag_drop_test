@@ -19,5 +19,12 @@ export default Ember.Component.extend(Droppable, {
 
   acceptDrop: function(event) {
     this.handleDrop(event);
+  },
+
+  actions: {
+    acceptForDrop: function() {
+      var hashId = this.get('coordinator.clickedId');
+      this.handlePayload(hashId);
+    }
   }
 });

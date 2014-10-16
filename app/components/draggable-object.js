@@ -18,5 +18,14 @@ export default Ember.Component.extend({
     console.debug("notifyDrop");
     this.get("parent").removeObject(obj);
     // this.incrementProperty("dropNotifyCount");
+  },
+
+  actions: {
+    selectForDrag: function() {
+      console.debug("selectForDrag");
+      var obj = this.get('content');
+      var hashId = this.get('coordinator').setObject(obj, {source: this});
+      this.get('coordinator').set("clickedId",hashId);
+    }
   }
 });
