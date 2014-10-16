@@ -13,7 +13,7 @@
 
 <div id="bin">
   {{#draggable-object-target content=binPosts}}
-    BIN #1<br>
+    Bin #1<br>
     
   {{/draggable-object-target}}
 
@@ -24,19 +24,11 @@
     <br>
   {{/each}}
 
-  <br>
+  <br><br>
 
-  {{#draggable-object-target content=binPosts2}}
-    BIN #2<br>
-    {{#each binPosts2}}
-      {{title}}
-      <br>
-    {{/each}}
-  {{/draggable-object-target}}
-
-  <br>
-
-  {{object-bin name="Bin #3"}}
+  {{object-bin name="Bin #2"}}
+  <br><br>
+  {{object-bin name="Bin #3" model=binPosts}}
 
   
 </div>

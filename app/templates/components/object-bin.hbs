@@ -1,10 +1,12 @@
 {{#draggable-object-target content=model}}
   {{name}}
+  <br>
+
+  {{#each obj in model}}
+    {{#draggable-object content=obj parent=model}}
+      {{obj.title}}
+      <br>
+    {{/draggable-object}}
+  {{/each}}
 {{/draggable-object-target}}
 
-{{#each obj in model}}
-  {{#draggable-object content=obj parent=model}}
-    {{obj.title}}
-    <br>
-  {{/draggable-object}}
-{{/each}}
