@@ -3,6 +3,7 @@ import cardJson from './card-json';
 
 var Card = DS.Model.extend({
   name: DS.attr("string"),
+  rating: DS.attr('string'),
 
   shortName: function() {
     var dashes = /[ :']+/g;
@@ -21,8 +22,14 @@ var makeFixtures = function() {
   var res = [];
   var cardData = cardJson.data;
 
-  for (var i=0;i<10;i++) {
+  for (var i=0;i<7;i++) {
     var data = cardData[i];
+    if (i === 0) {
+      data.rating = "good";
+    }
+    else {
+      data.rating = "unranked";
+    }
     res.push(data);
   }
   return res;

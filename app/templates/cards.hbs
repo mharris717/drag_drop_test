@@ -6,6 +6,14 @@
 
 <br>
 
-{{#object-bin name="Good"}}
+{{#object-bin name="Unranked" model=unrankedCards}}
+  {{partial "card"}}
+{{/object-bin}}
+
+{{#object-bin name="Good" model=goodCards}}
+  {{partial "card"}}
+{{/object-bin}}
+
+{{#object-bin name="Bad" model=badCards}}
   {{partial "card"}}
 {{/object-bin}}
