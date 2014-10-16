@@ -12,5 +12,9 @@ export default Ember.Component.extend({
     var id = this.get('coordinator').setObject(obj);
 
     dataTransfer.setData('Text', id);
-  }.on("dragStart")
+  }.on("dragStart"),
+
+  notifyDrop: function() {
+    // this.incrementProperty("dropNotifyCount");
+  }
 });

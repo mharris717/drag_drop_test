@@ -7,10 +7,15 @@ export default Ember.Object.extend({
   }.property(),
 
   getObject: function(id) {
-    return this.get('objectMap').getObj(id);
+    var payload = this.get('objectMap').getObj(id);
+    if (payload.ops.source) {
+      payload.ops.source.notifyDrop(payload.obj);
+    }
+    return payload.obj;
   },
 
-  setObject: function(obj) {
-    return this.get('objectMap').add(obj);
+  setObject: function(obj,ops) {
+    ops = ops || {};
+    return this.get('objectMap').add({obj: obj, ops: ops});
   }
 });

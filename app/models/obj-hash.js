@@ -26,5 +26,13 @@ export default Ember.Object.extend({
     return num;
   },
 
+  keys: function() {
+    var res = [];
+    for (var key in this.get('content')) {
+      res.push(key);
+    }
+    return Ember.A(res);
+  },
+
   lengthBinding: "contentLength"
 });

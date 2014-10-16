@@ -1,57 +1,62 @@
-// import Ember from 'ember';
-// import { test, moduleForComponent } from 'ember-qunit';
+import Ember from 'ember';
+import { test, moduleForComponent } from 'ember-qunit';
+import Coordinator from '../../../models/coordinator';
 
-// var Thing = Ember.Object.extend({});
-// moduleForComponent("draggable-object", {
-//   setup: function() {
-    
-//   }
-// });
+var Thing = Ember.Object.extend({});
+moduleForComponent("draggable-object");
 
-// test("smoke", function() {
-//   var s = this.subject();
-//   Ember.run(function() {
-//     s.set("thing",1);
-//   });
-//   equal(s.get('thing'),1);
-// });
+var MockDataTransfer = Ember.Object.extend({
+  setData: function(dataType,payload) {
+    this.set("data", {dataType: dataType, payload: payload});
+  }
+});
 
-// test("payload", function() {
-//   var thing = Thing.create({id: 1});
+var makeMockEvent = function() {
+  var res = {dataTransfer: MockDataTransfer.create()};
+  res.originalEvent = res;
+  return res;
+};
 
-//   var s = this.subject();
-//   s.set("content",thing);
+test("handleDragStart", function() {
+  var thing = Thing.create({id: 1});
+  var coordinator = Coordinator.create();
 
-//   var exp = JSON.stringify({id: 1, modelName: 'post'});
-//   equal(s.get('payload'),exp);
-// });
+  var s = this.subject({coordinator: coordinator});
+  s.set("content",thing);
 
-// var MockDataTransfer = Ember.Object.extend({
-//   setData: function(dataType,payload) {
-//     this.set("data", {dataType: dataType, payload: payload});
-//   }
-// });
+  var event = makeMockEvent();
+  Ember.run(function() {
+    s.handleDragStart(event);
+  });
 
-// var makeMockEvent = function() {
-//   var res = {dataTransfer: MockDataTransfer.create()};
-//   res.originalEvent = res;
-//   return res;
-// };
+  var keys = coordinator.get("objectMap").keys();
+  var hashId = Ember.A(keys).get("lastObject");
 
-// test("handleDragStart", function() {
-//   var thing = Thing.create({id: 1});
-//   var expPayload = JSON.stringify({id: 1, modelName: 'post'});
+  var data = event.dataTransfer.get('data');
+  equal(data.dataType,"Text");
+  equal(data.payload,hashId);
+});
 
-//   var s = this.subject();
-//   s.set("content",thing);
+test("notified of drop", function() {
+  var thing = Thing.create({id: 1});
+  var coordinator = Coordinator.create();
 
-//   var event = makeMockEvent();
-//   s.handleDragStart(event);
+  var s = this.subject({coordinator: coordinator});
+  s.set("content",thing);
 
-//   var data = event.dataTransfer.get('data');
-//   equal(data.dataType,"Text");
-//   equal(data.payload,expPayload);
-// });
+  var notifyDropCount = 0;
+  s.notifyDrop = function() {
+    notifyDropCount = notifyDropCount + 1;
+  };
+
+  var hashId = null;
+  Ember.run(function() {
+    hashId = coordinator.setObject(thing, {source: s});
+  });
+
+  coordinator.getObject(hashId);
+  equal(notifyDropCount,1);
+});
 
 // test("template smoke", function() {
 //   var s = this.subject();
