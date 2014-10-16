@@ -1,19 +1,31 @@
 <h2>Cards</h2>
 
-{{#object-bin model=this name="All"}}
-  {{partial "card"}}
-{{/object-bin}}
+<div class="all-cards">
+  {{#object-bin model=this name="All"}}
+    {{partial "card"}}
+  {{/object-bin}}
+</div>
 
 <br>
 
-{{#object-bin name="Unranked" model=unrankedCards}}
-  {{partial "card"}}
-{{/object-bin}}
+<a href="#" {{action "save"}}>Save</a>
 
-{{#object-bin name="Good" model=goodCards}}
-  {{partial "card"}}
-{{/object-bin}}
+<br><hr><br><br>
 
-{{#object-bin name="Bad" model=badCards}}
-  {{partial "card"}}
-{{/object-bin}}
+<div class="rated-cards">
+  {{#object-bin name="Unranked" model=unrankedCards}}
+    {{partial "card"}}
+  {{/object-bin}}
+</div>
+
+<div class="rated-cards">
+  {{#object-bin name="Good" model=goodCards}}
+    {{partial "card"}}
+  {{/object-bin}}
+</div>
+
+<div class="rated-cards">
+  {{#object-bin name="Bad" model=badCards}}
+    {{partial "card"}}
+  {{/object-bin}}
+</div>

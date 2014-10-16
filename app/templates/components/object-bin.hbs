@@ -1,13 +1,15 @@
-{{#draggable-object-target content=model}}
-  <h4>{{name}}</h4>
-  <br>
+<div class="object-bin">
+  {{#draggable-object-target content=model}}
+    <div class="object-bin-title">{{name}}</div>
+    <br>
 
-  {{#each obj in model}}
+    {{#each obj in model}}
 
-    {{#draggable-object content=obj parent=model}}
-      {{#with obj}}
-        {{yield}}
-      {{/with}}
-    {{/draggable-object}}
-  {{/each}}
-{{/draggable-object-target}}
+      {{#draggable-object content=obj parent=model}}
+        {{#with obj}}
+          {{yield}}
+        {{/with}}
+      {{/draggable-object}}
+    {{/each}}
+  {{/draggable-object-target}}
+</div>

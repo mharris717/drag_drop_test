@@ -4,6 +4,7 @@ import cardJson from './card-json';
 var Card = DS.Model.extend({
   name: DS.attr("string"),
   rating: DS.attr('string'),
+  rev: DS.attr('string'),
 
   shortName: function() {
     var dashes = /[ :']+/g;
@@ -14,7 +15,8 @@ var Card = DS.Model.extend({
 
   imageUrl: function() {
     var n = this.get('shortName');
-    return "https://s3-us-west-2.amazonaws.com/hearthstats/cards/"+n+".png";
+    //return "https://s3-us-west-2.amazonaws.com/hearthstats/cards/"+n+".png";
+    return "http://localhost:4500/card_images/"+n+".png";
   }.property("shortName")
 });
 
@@ -22,7 +24,7 @@ var makeFixtures = function() {
   var res = [];
   var cardData = cardJson.data;
 
-  for (var i=0;i<7;i++) {
+  for (var i=0;i<2;i++) {
     var data = cardData[i];
     if (i === 0) {
       data.rating = "good";
