@@ -1,43 +1,19 @@
 <div id="posts">
   {{#object-bin name="All" model=this}}
-    <span class="title">
-      {{title}}
-    </span>
-    <span class="author">
-      By {{author}}
-    </span>
-    <br>
+    {{partial "post"}}
   {{/object-bin}}
 </div>
 
 <div id="bin">
   {{#object-bin name="Bin #1" model=binPosts}}
-    <span class="title">
-      {{title}}
-    </span>
-    <span class="author">
-      By {{author}}
-    </span>
-    <br>
+    {{partial "post"}}
   {{/object-bin}}
   <br><br>
   {{#object-bin name="Bin #2"}}
-    <span class="title">
-      {{title}}
-    </span>
-    <span class="author">
-      By {{author}}
-    </span>
-    <br>
+    {{partial "post"}}
   {{/object-bin}}
   <br><br>
   {{#object-bin name="Bin #3" model=binPosts}}
-    <span class="title">
-      {{title}}
-    </span>
-    <span class="author">
-      By {{author}}
-    </span>
-    <br>
+    {{partial "post"}}
   {{/object-bin}}
 </div>
