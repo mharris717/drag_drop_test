@@ -7,8 +7,7 @@ export default Ember.Component.extend(Droppable, {
   }.property(),
 
   handlePayload: function(payload) {
-    var data = JSON.parse(payload);
-    var obj = this.get('coordinator').getObject(data);
+    var obj = this.get('coordinator').getObject(payload);
     this.get('content').pushObject(obj);
   },
 

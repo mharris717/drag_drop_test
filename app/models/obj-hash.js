@@ -22,6 +22,7 @@ export default Ember.Object.extend({
   generateId: function() {
     var num = Math.random() * 1000000000000.0;
     num = parseInt(num);
+    num = ""+num;
     return num;
   },
 
