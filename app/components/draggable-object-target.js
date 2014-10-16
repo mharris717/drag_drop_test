@@ -8,7 +8,7 @@ export default Ember.Component.extend(Droppable, {
 
   handlePayload: function(payload) {
     var data = JSON.parse(payload);
-    var obj = this.get('store').find(data.modelName,data.id);
+    var obj = this.get('coordinator').getObject(data);
     this.get('content').pushObject(obj);
   },
 

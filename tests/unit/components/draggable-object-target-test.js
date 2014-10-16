@@ -21,6 +21,20 @@ var FakeStore = Ember.Object.extend({
   }
 });
 
+var Coordinator = Ember.Object.extend({
+  objectMap: function() {
+    return ObjHash.create();
+  }.property(),
+
+  getObject: function(payload) {
+    return this.get('objectMap').getObj(id);
+  },
+
+  setObject: function(payload,obj) {
+    this.get('objectMap').add(obj);
+  }
+});
+
 var makeStore = function() {
   var all = [];
   for (var i=1;i<=5;i++) {
@@ -41,79 +55,99 @@ test("smoke", function() {
   equal(s.get('thing'),1);
 });
 
-test("handlePayload", function() {
-  var s = this.subject({store: makeStore()});
-  var id = randId();
+var makeTestObjects = function() {
+  var res = {};
 
-  var payload = JSON.stringify({id: id, modelName: 'post'});
-  s.handlePayload(payload);
-  equal(s.get('content.length'),1);
-  equal(s.get('content.firstObject.id'),id);
-});
+  res.coordinator = Coordinator.create();
+  res.store = makeStore();
+  res.id = randId();
+  res.obj = res.store.find('post',res.id);
 
-var MockDataTransfer = Ember.Object.extend({
-  getData: function(dataType) {
-    return this.get('payload');
-  }
-});
-
-test("handlePayload twice", function() {
-  var s = this.subject({store: makeStore()});
-
-  var id = randId();
-  var payload = JSON.stringify({id: id, modelName: 'post'});
-  s.handlePayload(payload);
-
-  var id2 = randId();
-  payload = JSON.stringify({id: id2, modelName: 'post'});
-  s.handlePayload(payload);
-
-
-  equal(s.get('content.length'),2);
-  equal(s.get('content.firstObject.id'),id);
-  equal(s.get('content.lastObject.id'),id2);
-});
-
-var MockDataTransfer = Ember.Object.extend({
-  getData: function(dataType) {
-    return this.get('payload');
-  }
-});
-
-var makeMockEvent = function(payload) {
-  var transfer = MockDataTransfer.create({payload: payload});
-  var res = {dataTransfer: transfer};
-  res.originalEvent = res;
   return res;
 };
 
-test("handleDrop", function() {
-  var id = randId();
-  var s = this.subject({store: makeStore()});
-  var payload = JSON.stringify({id: id, modelName: 'post'});
-  var event = makeMockEvent(payload);
+var testWithObjects = function(name,f) {
+  test(name, function() {
+    var o = makeTestObjects();
+    f.call(this,o);
+  });
+};
 
-  s.handleDrop(event);
+testWithObjects("handlePayload", function(o) {
+  o.coordinator.setObject({id: o.id},o.obj);
 
-  equal(s.get('content.length'),1);
-  equal(s.get('content.firstObject.id'),id);
-});
+  var s = this.subject({store: o.store, coordinator: o.coordinator});
+  
 
-test("pass in content", function() {
-  var content = [];
-  var s = this.subject({content: content, store: makeStore()});
-  var id = randId();
-
-  var payload = JSON.stringify({id: id, modelName: 'post'});
+  var payload = JSON.stringify({id: o.id, modelName: 'post'});
   s.handlePayload(payload);
   equal(s.get('content.length'),1);
-  equal(s.get('content.firstObject.id'),id);
-  equal(content.length,1);
+  equal(s.get('content.firstObject.id'),o.id);
 });
 
-test("template smoke", function() {
-  var all = [1,2,3,4,5];
-  var s = this.subject({content: all});
-  equal(this.$().find(".count").length,1);
-  equal(this.$().find(".count").text(),"5");
-});
+// var MockDataTransfer = Ember.Object.extend({
+//   getData: function(dataType) {
+//     return this.get('payload');
+//   }
+// });
+
+// test("handlePayload twice", function() {
+//   var s = this.subject({store: makeStore()});
+
+//   var id = randId();
+//   var payload = JSON.stringify({id: id, modelName: 'post'});
+//   s.handlePayload(payload);
+
+//   var id2 = randId();
+//   payload = JSON.stringify({id: id2, modelName: 'post'});
+//   s.handlePayload(payload);
+
+
+//   equal(s.get('content.length'),2);
+//   equal(s.get('content.firstObject.id'),id);
+//   equal(s.get('content.lastObject.id'),id2);
+// });
+
+// var MockDataTransfer = Ember.Object.extend({
+//   getData: function(dataType) {
+//     return this.get('payload');
+//   }
+// });
+
+// var makeMockEvent = function(payload) {
+//   var transfer = MockDataTransfer.create({payload: payload});
+//   var res = {dataTransfer: transfer};
+//   res.originalEvent = res;
+//   return res;
+// };
+
+// test("handleDrop", function() {
+//   var id = randId();
+//   var s = this.subject({store: makeStore()});
+//   var payload = JSON.stringify({id: id, modelName: 'post'});
+//   var event = makeMockEvent(payload);
+
+//   s.handleDrop(event);
+
+//   equal(s.get('content.length'),1);
+//   equal(s.get('content.firstObject.id'),id);
+// });
+
+// test("pass in content", function() {
+//   var content = [];
+//   var s = this.subject({content: content, store: makeStore()});
+//   var id = randId();
+
+//   var payload = JSON.stringify({id: id, modelName: 'post'});
+//   s.handlePayload(payload);
+//   equal(s.get('content.length'),1);
+//   equal(s.get('content.firstObject.id'),id);
+//   equal(content.length,1);
+// });
+
+// test("template smoke", function() {
+//   var all = [1,2,3,4,5];
+//   var s = this.subject({content: all});
+//   equal(this.$().find(".count").length,1);
+//   equal(this.$().find(".count").text(),"5");
+// });
