@@ -1,5 +1,9 @@
 <span class="thing" draggable="true">
-  <a href="#" {{action "selectForDrag"}}>
+  {{#if enableClicking}}
+    <a href="#" {{action "selectForDrag"}}>
+      {{yield}}
+    </a>
+  {{else}}
     {{yield}}
-  </a>
+  {{/if}}
 </span>
