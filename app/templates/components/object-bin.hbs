@@ -1,0 +1,10 @@
+{{#draggable-object-target content=model}}
+  {{name}}
+{{/draggable-object-target}}
+
+{{#each obj in model}}
+  {{#draggable-object content=obj parent=model}}
+    {{obj.title}}
+    <br>
+  {{/draggable-object}}
+{{/each}}
