@@ -3,14 +3,11 @@
   <br>
 
   {{#each obj in model}}
+
     {{#draggable-object content=obj parent=model}}
-      <span class="title">
-        {{obj.title}}
-      </span>
-      <span class="author">
-        By {{obj.author}}
-      </span>
-      <br>
+      {{#with obj}}
+        {{yield}}
+      {{/with}}
     {{/draggable-object}}
   {{/each}}
 {{/draggable-object-target}}
