@@ -87,7 +87,7 @@ var equalProp = function(obj,prop,exp) {
 };
 
 testWithObjects("handlePayload", function(o) {
-  var s = this.subject({coordinator: o.coordinator, action: "objectDropped"});
+  var s = this.subject({coordinsator: o.coordinator, action: "objectDropped"});
 
   var content = Ember.A();
   var targetObject = {

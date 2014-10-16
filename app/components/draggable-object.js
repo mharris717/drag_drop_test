@@ -3,12 +3,24 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: "span", 
 
-  initd: function() {
-    var me = this;
-    this.get('coordinator').on("objectDropsped", function() {
-      me.sendAction();
-    });
+  init: function() {
+
+    //var me = this;
+    // if (!this.get('coordinator')) {
+    //   throw ("no coordinator");
+    // }
+
+    // this.get('coordinator').on("objectDropsped", function() {
+    //   me.sendAction();
+    // });
+
+    this._super();
   },
+
+  dfdsfsdgdfg: function() {
+    throw "bad stuff";
+  
+  }.observes("coordinator"),
 
   handleDragStart: function(event) {
     console.debug("handleDragStart");
