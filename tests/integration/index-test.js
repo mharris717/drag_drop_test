@@ -23,7 +23,7 @@ var postsTest = function(name,f) {
 
 postsTest("smoke", function() {
   equal(find(".author").length,10);
-  equal(find(".title:eq(0)").text(),"Title 1");
+  equal(find(".title:eq(0)").text().trim(),"Title 1");
 });
 
 postsTest("has draggable attr", function() {
