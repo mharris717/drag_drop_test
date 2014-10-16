@@ -14,12 +14,6 @@ export default Ember.Component.extend({
     dataTransfer.setData('Text', id);
   }.on("dragStart"),
 
-  notifyDrop: function(obj) {
-    console.debug("notifyDrop");
-    this.get("parent").removeObject(obj);
-    // this.incrementProperty("dropNotifyCount");
-  },
-
   actions: {
     selectForDrag: function() {
       console.debug("selectForDrag");

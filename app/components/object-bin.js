@@ -1,12 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  model: [],
-
-  forEach: function(f) {
-    return this.get('model').forEach(f);
-  },
-
+var YieldLocalMixin = Ember.Mixin.create({
   _yield: function(context, options) {
     var view = options.data.view;
     var parentView = this._parentView;
@@ -26,4 +20,8 @@ export default Ember.Component.extend({
       });
     }
   }
+});
+
+export default Ember.Component.extend(YieldLocalMixin, {
+  model: []
 });

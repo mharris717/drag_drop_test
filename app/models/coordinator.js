@@ -10,7 +10,7 @@ export default Ember.Object.extend({
     var payload = this.get('objectMap').getObj(id);
 
     if (payload.ops.source) {
-      payload.ops.source.notifyDrop(payload.obj);
+      payload.ops.source.trigger("objectDropped");
     }
 
     this.get('moveCallbacks').forEach(function(f) {

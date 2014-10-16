@@ -45,9 +45,9 @@ test("notified of drop", function() {
   s.set("content",thing);
 
   var notifyDropCount = 0;
-  s.notifyDrop = function() {
-    notifyDropCount = notifyDropCount + 1;
-  };
+  s.on("objectDropped", s, function() {
+    notifyDropCount++;
+  });
 
   var hashId = Ember.run(function() {
     return coordinator.setObject(thing, {source: s});

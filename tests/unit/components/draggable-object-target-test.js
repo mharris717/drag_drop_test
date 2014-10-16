@@ -87,12 +87,18 @@ var equalProp = function(obj,prop,exp) {
 };
 
 testWithObjects("handlePayload", function(o) {
-  var s = this.subject({store: o.store, coordinator: o.coordinator});
+  var s = this.subject({coordinator: o.coordinator});
+
+  var content = Ember.A();
+  s.on("objectDropped", function(obj) {
+    content.push(obj);
+  });
+
   s.handlePayload(o.hashId);
 
-  equalLength(s.get('content'),1);
-  equal(s.get('content.firstObject.id'),o.id,"Expected ID to be "+o.id);
-  equalProp(s,"content.firstObject.id",o.id);
+  equalLength(content,1);
+  equal(content.get('firstObject.id'),o.id,"Expected ID to be "+o.id);
+  equalProp(content,"firstObject.id",o.id);
 });
 
 var MockDataTransfer = Ember.Object.extend({
@@ -122,34 +128,45 @@ var MockDataTransfer = Ember.Object.extend({
 //   equal(s.get('content.lastObject.id'),id2,"Last Object ID");
 // });
 
-var makeMockEvent = function(payload) {
-  var transfer = MockDataTransfer.create({payload: payload});
-  var res = {dataTransfer: transfer};
-  res.originalEvent = res;
-  return res;
-};
+if (2 === 2) {
+  var makeMockEvent = function(payload) {
+    var transfer = MockDataTransfer.create({payload: payload});
+    var res = {dataTransfer: transfer};
+    res.originalEvent = res;
+    return res;
+  };
 
-testWithObjects("handleDrop", function(o) {
-  var s = this.subject({store: o.store, coordinator: o.coordinator});
+  testWithObjects("handleDrop", function(o) {
+    var s = this.subject({store: o.store, coordinator: o.coordinator});
 
-  var event = makeMockEvent(o.hashId);
+    var content = Ember.A();
+    s.on("objectDropped", function(obj) {
+      content.push(obj);
+    });
 
-  s.handleDrop(event);
+    var event = makeMockEvent(o.hashId);
 
-  equal(s.get('content.length'),1);
-  equal(s.get('content.firstObject.id'),o.id);
-});
+    s.handleDrop(event);
 
-testWithObjects("pass in content", function(o) {
-  var content = [];
-  var s = this.subject({content: content, store: o.store, coordinator: o.coordinator});
+    equal(content.get('length'),1);
+    equal(content.get('firstObject.id'),o.id);
+  });
 
-  s.handlePayload(o.hashId);
+  testWithObjects("pass in content", function(o) {
+    var s = this.subject({coordinator: o.coordinator});
 
-  equal(s.get('content.length'),1);
-  equal(s.get('content.firstObject.id'),o.id);
-  equal(content.length,1);
-});
+    var content = Ember.A();
+    s.on("objectDropped", function(obj) {
+      content.push(obj);
+    });
+
+    s.handlePayload(o.hashId);
+
+    equal(content.get('length'),1);
+    equal(content.get('firstObject.id'),o.id);
+    equal(content.length,1);
+  });
+}
 
 // test("template smoke", function() {
 //   var all = [1,2,3,4,5];
