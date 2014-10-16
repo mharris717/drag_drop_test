@@ -4,7 +4,6 @@ import Droppable from '../mixins/droppable';
 export default Ember.Component.extend(Droppable, {
   handlePayload: function(payload) {
     var obj = this.get('coordinator').getObject(payload);
-    this.trigger('objectDropped',obj);
     this.sendAction('action',obj);
   },
 
@@ -17,10 +16,6 @@ export default Ember.Component.extend(Droppable, {
   acceptDrop: function(event) {
     this.handleDrop(event);
   },
-
-  fgdfgdf: function() {
-    console.debug("got objectDropped in target");
-  }.on("objectDropped"),
 
   actions: {
     acceptForDrop: function() {

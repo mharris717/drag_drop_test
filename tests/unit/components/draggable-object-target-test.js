@@ -87,12 +87,15 @@ var equalProp = function(obj,prop,exp) {
 };
 
 testWithObjects("handlePayload", function(o) {
-  var s = this.subject({coordinator: o.coordinator});
+  var s = this.subject({coordinator: o.coordinator, action: "objectDropped"});
 
   var content = Ember.A();
-  s.on("objectDropped", function(obj) {
-    content.push(obj);
-  });
+  var targetObject = {
+    objectDropped: function(obj) {
+      content.push(obj);
+    }
+  };
+  s.set("targetObject",targetObject);
 
   s.handlePayload(o.hashId);
 
@@ -137,12 +140,15 @@ if (2 === 2) {
   };
 
   testWithObjects("handleDrop", function(o) {
-    var s = this.subject({store: o.store, coordinator: o.coordinator});
+    var s = this.subject({coordinator: o.coordinator, action: "objectDropped"});
 
     var content = Ember.A();
-    s.on("objectDropped", function(obj) {
-      content.push(obj);
-    });
+    var targetObject = {
+      objectDropped: function(obj) {
+        content.push(obj);
+      }
+    };
+    s.set("targetObject",targetObject);
 
     var event = makeMockEvent(o.hashId);
 
@@ -153,12 +159,15 @@ if (2 === 2) {
   });
 
   testWithObjects("pass in content", function(o) {
-    var s = this.subject({coordinator: o.coordinator});
+    var s = this.subject({coordinator: o.coordinator, action:"objectDropped"});
 
     var content = Ember.A();
-    s.on("objectDropped", function(obj) {
-      content.push(obj);
-    });
+    var targetObject = {
+      objectDropped: function(obj) {
+        content.push(obj);
+      }
+    };
+    s.set("targetObject",targetObject);
 
     s.handlePayload(o.hashId);
 
