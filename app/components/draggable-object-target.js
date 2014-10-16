@@ -5,6 +5,7 @@ export default Ember.Component.extend(Droppable, {
   handlePayload: function(payload) {
     var obj = this.get('coordinator').getObject(payload);
     this.trigger('objectDropped',obj);
+    this.sendAction('action',obj);
   },
 
   handleDrop: function(event) {
@@ -16,6 +17,10 @@ export default Ember.Component.extend(Droppable, {
   acceptDrop: function(event) {
     this.handleDrop(event);
   },
+
+  fgdfgdf: function() {
+    console.debug("got objectDropped in target");
+  }.on("objectDropped"),
 
   actions: {
     acceptForDrop: function() {

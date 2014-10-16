@@ -63,6 +63,10 @@ export default Ember.ArrayController.extend({
     }
   }.observes("goodCards.@each","badCards.@each","unrankedCards.@each"),
 
+  thingnow: function() {
+    console.debug("got objectDropped event in cards");
+  }.on("objectDropped"),
+
   actions: {
     save: function() {
       this.eachCardWithRating(function(card,rating) {
@@ -73,6 +77,10 @@ export default Ember.ArrayController.extend({
       // this.forEach(function(card) {
       //   card.save();
       // });
+    },
+
+    handleObjectDropped: function() {
+      console.debug("got handleObjectDropped in cards");
     }
   }
 });

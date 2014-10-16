@@ -23,5 +23,16 @@ var YieldLocalMixin = Ember.Mixin.create({
 });
 
 export default Ember.Component.extend(YieldLocalMixin, {
-  model: []
+  model: [],
+
+  thingnow: function() {
+    console.debug("got objectDropped event in bin");
+  }.on("objectDropped"),
+
+  actions: {
+    handleObjectDropped: function(obj) {
+      console.debug("got handleObjectDropped in bin");
+      this.get('model').pushObject(obj);
+    }
+  }
 });
